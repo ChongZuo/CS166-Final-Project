@@ -1,0 +1,74 @@
+--DROP TRIGGER IF EXISTS trigger1 ON Plane;
+
+
+--Plane
+CREATE SEQUENCE planeID_seq START WITH 67;
+
+CREATE OR REPLACE FUNCTION add_planeID()
+RETURNS "trigger" AS
+$BODY$
+BEGIN
+
+NEW.id = nextval('planeID_seq');
+RETURN NEW;
+
+END;
+$BODY$
+LANGUAGE plpgsql VOLATILE;
+
+CREATE TRIGGER trigger1 BEFORE INSERT ON Plane FOR EACH ROW
+EXECUTE PROCEDURE add_planeID();
+
+--Pilot
+CREATE SEQUENCE pilotID_seq START WITH 250;
+
+CREATE OR REPLACE FUNCTION add_pilotID()
+RETURNS "trigger" AS
+$BODY$
+BEGIN
+
+NEW.id = nextval('pilotID_seq');
+RETURN NEW;
+
+END;
+$BODY$
+LANGUAGE plpgsql VOLATILE;
+
+CREATE TRIGGER trigger2 BEFORE INSERT ON Pilot FOR EACH ROW
+EXECUTE PROCEDURE add_pilotID();
+
+--Flight
+CREATE SEQUENCE fnum_seq START WITH 2000;
+
+CREATE OR REPLACE FUNCTION add_fnum()
+RETURNS "trigger" AS
+$BODY$
+BEGIN
+
+NEW.fnum = nextval('fnum_seq');
+RETURN NEW;
+
+END;
+$BODY$
+LANGUAGE plpgsql VOLATILE;
+
+CREATE TRIGGER trigger3 BEFORE INSERT ON Flight FOR EACH ROW
+EXECUTE PROCEDURE add_fnum();
+
+--Technician
+CREATE SEQUENCE techID_seq START WITH 250;
+
+CREATE OR REPLACE FUNCTION add_techID()
+RETURNS "trigger" AS
+$BODY$
+BEGIN
+
+NEW.id = nextval('techID_seq');
+RETURN NEW;
+
+END;
+$BODY$
+LANGUAGE plpgsql VOLATILE;
+
+CREATE TRIGGER trigger4 BEFORE INSERT ON Technician FOR EACH ROW
+EXECUTE PROCEDURE add_techID();

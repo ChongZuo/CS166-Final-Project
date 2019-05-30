@@ -300,24 +300,177 @@ public class DBproject{
 	}//end readChoice
 
 	public static void AddPlane(DBproject esql) {//1
+
+	try{
+		
+		String make, model, age, seats, select_max;
+		int ID = 0;
+
+		System.out.print("\tPlease enter the airplane make: ");
+		make = in.readLine();
+		System.out.print("\tPlease enter the airplane model: ");
+		model = in.readLine();
+		System.out.print("\tPlease enter the airplane age: ");
+		age = in.readLine();
+		System.out.print("\tPlease enter the number of seats: ");
+		seats = in.readLine();
+		
+		String query = "INSERT INTO Plane(make, model, age, seats) VALUES ( \'" + make + "\', \'" + model + "\', " + age + "," + seats + ");";
+		esql.executeUpdate(query);
+
+		select_max = "SELECT MAX(P.id) FROM Plane P;";
+		List<List<String>> max = esql.executeQueryAndReturnResult(select_max);
+
+		for(List<String> sl : max){
+			for(String s: sl){
+				ID = Integer.parseInt(s);
+			}
+		}
+
+		String test = "SELECT * FROM Plane;";
+		esql.executeQueryAndPrintResult(test);
+		
+		System.out.println("\nNew airplane is added as below:\n");
+		String result = "SELECT * FROM Plane WHERE id = " + ID + ";";
+		esql.executeQueryAndPrintResult(result);
+		System.out.println("\n");
+	}//end try
+	catch(Exception e){
+		System.out.println(e.getMessage());
+	}
+
 	}
 
 	public static void AddPilot(DBproject esql) {//2
-	}
 
+	try{
+		
+		String fullname, nationality, select_max;
+		int ID = 0;
+
+		System.out.print("\tPlease enter pilot fullname (Firstname Lastname): ");
+		fullname = in.readLine();
+		System.out.print("\tPlease enter nationality: ");
+		nationality = in.readLine();
+
+		String query = "INSERT INTO Pilot(fullname, nationality) VALUES ( \'" + fullname + "\', \'" + nationality + "\');";
+		esql.executeUpdate(query);
+
+		select_max = "SELECT MAX(P.id) FROM Pilot P;";
+		List<List<String>> max = esql.executeQueryAndReturnResult(select_max);
+
+		for(List<String> sl : max){
+			for(String s: sl){
+				ID = Integer.parseInt(s);
+			}
+		}
+
+		String test = "SELECT * FROM Pilot;";
+		esql.executeQueryAndPrintResult(test);
+		
+		System.out.println("\nNew pilot is added as below:\n");
+		String result = "SELECT * FROM Pilot WHERE id = " + ID + ";";
+		esql.executeQueryAndPrintResult(result);
+		System.out.println("\n");
+	}//end try
+	catch(Exception e){
+		System.out.println(e.getMessage());
+	}
+	}
 	public static void AddFlight(DBproject esql) {//3
 		// Given a pilot, plane and flight, adds a flight in the DB
+
+	try{
+		
+		String actual_departure_date, actual_arrival_date, arrival_airport, departure_airport, select_max;
+		int cost, num_sold, num_stops;
+		int fnum = 0;
+
+		System.out.print("\tPlease enter the cost: ");
+		cost = Integer.parseInt(in.readLine());
+		System.out.print("\tPlease enter the number of unavailable seats : ");
+		num_sold = Integer.parseInt(in.readLine());
+		System.out.print("\tPlease enter the number of stops: ");
+		num_stops = Integer.parseInt(in.readLine());
+		System.out.print("\tPlease enter the departure date: ");
+		actual_departure_date = in.readLine();
+		System.out.print("\tPlease enter the arrival date: ");
+		actual_arrival_date = in.readLine();
+		System.out.print("\tPlease enter the arrival airport: ");
+		arrival_airport = in.readLine();
+		System.out.print("\tPlease enter the departure airport: ");
+		departure_airport = in.readLine();
+		
+		String query = "INSERT INTO Flight(cost, num_sold, num_stops, actual_departure_date, actual_arrival_date" 
+				+ ", arrival_airport, departure_airport) VALUES ( " + cost + "," + num_sold + "," + num_stops 
+				+ ", \'" + actual_departure_date + "\', \'" + actual_arrival_date + "\', \' " + arrival_airport 
+				+ "\', \'" + departure_airport + "\');";
+		esql.executeUpdate(query);
+
+		select_max = "SELECT MAX(fnum) FROM Flight;";
+		List<List<String>> max = esql.executeQueryAndReturnResult(select_max);
+
+		for(List<String> sl : max){
+			for(String s: sl){
+				fnum = Integer.parseInt(s);
+			}
+		}
+
+		String test = "SELECT * FROM Flight;";
+		esql.executeQueryAndPrintResult(test);
+		
+		System.out.println("\nNew flight is added as below:\n");
+		String result = "SELECT * FROM Flight WHERE fnum = " + fnum + ";";
+		esql.executeQueryAndPrintResult(result);
+		System.out.println("\n");
+	}//end try
+	catch(Exception e){
+		System.out.println(e.getMessage());
+	}
+
 	}
 
 	public static void AddTechnician(DBproject esql) {//4
+
+	try{
+		
+		String full_name, select_max;
+		int ID = 0;
+
+		System.out.print("\tPlease enter Technician fullname (Firstname Lastname): ");
+		full_name = in.readLine();
+
+		String query = "INSERT INTO Technician(full_name) VALUES ( \'" + full_name + "\');";
+		esql.executeUpdate(query);
+
+		select_max = "SELECT MAX(id) FROM Technician;";
+		List<List<String>> max = esql.executeQueryAndReturnResult(select_max);
+
+		for(List<String> sl : max){
+			for(String s: sl){
+				ID = Integer.parseInt(s);
+			}
+		}
+
+		String test = "SELECT * FROM Technician;";
+		esql.executeQueryAndPrintResult(test);
+		
+		System.out.println("\nNew technician is added as below:\n");
+		String result = "SELECT * FROM Technician WHERE id = " + ID + ";";
+		esql.executeQueryAndPrintResult(result);
+		System.out.println("\n");
+	}//end try
+	catch(Exception e){
+		System.out.println(e.getMessage());
+	}
 	}
 
 	public static void BookFlight(DBproject esql) {//5
 		// Given a customer and a flight that he/she wants to book, add a reservation to the DB
-		int Cid;
+		//int Cid;
 		
-		System.out.println("please enter your SSN: ");
-		Cid = Ineger.parseInt(in.readLine());
+		//System.out.println("please enter your SSN: ");
+		//Cid = Ineger.parseInt(in.readLine());
 		
 		
 		 
